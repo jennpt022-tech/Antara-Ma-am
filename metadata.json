@@ -1,0 +1,6 @@
+{
+  "name": "Happy Birthday, Chief Coordinator!",
+  "description": "A birthday celebration from the whole team for our Chief Coordinator.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
