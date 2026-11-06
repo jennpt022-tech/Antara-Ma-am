@@ -184,6 +184,12 @@ export const galleryPhotos: GalleryPhoto[] = [
     caption: "All in One Frame",
     aspectClass: "aspect-[4/3]",
   },
+  {
+    id: 6,
+    src: "/assets/aistudio/golden_daa5e5a6.jpeg",
+    caption: "Golden Days & Timeless Memories",
+    aspectClass: "aspect-[16/9]",
+  },
 ];
 
 export const videoMessages: VideoMessage[] = [
