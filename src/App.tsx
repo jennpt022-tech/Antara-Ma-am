@@ -63,10 +63,8 @@ export default function App() {
             <span>Honoring Our Chief Coordinator • Dr. Antara Sonawane</span>
           </div>
 
-          <div className="flex items-center gap-1 text-muted-foreground">
-            <span>Crafted with</span>
-            <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500 inline" />
-            <span>by the Entire Coordinator Team</span>
+          <div className="flex items-center gap-1.5 text-sm font-medium text-foreground">
+            <span>Crafted with 🩷 by Anjali & Pooja</span>
           </div>
         </div>
       </footer>

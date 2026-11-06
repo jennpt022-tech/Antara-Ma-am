@@ -3,17 +3,20 @@ import { reasonsData } from '../data';
 import { triggerConfettiBurst } from '../utils/celebration';
 
 export const ReasonsSection: React.FC = () => {
-  // Track which card is flipped
-  const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [tappedCard, setTappedCard] = useState<number | null>(null);
 
-  const toggleFlip = (id: number) => {
-    setFlippedCards((prev) => {
-      const nextState = !prev[id];
-      if (nextState) {
-        triggerConfettiBurst();
-      }
-      return { ...prev, [id]: nextState };
-    });
+  const handleMouseEnter = (id: number) => {
+    setHoveredCard(id);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredCard(null);
+  };
+
+  const handleToggleTap = (id: number) => {
+    setTappedCard((prev) => (prev === id ? null : id));
+    triggerConfettiBurst();
   };
 
   return (
@@ -30,15 +33,24 @@ export const ReasonsSection: React.FC = () => {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {reasonsData.map((item) => {
-            const isFlipped = !!flippedCards[item.id];
+            const isFlipped = hoveredCard === item.id || tappedCard === item.id;
 
             return (
-              <button
+              <div
                 key={item.id}
-                onClick={() => toggleFlip(item.id)}
+                onMouseEnter={() => handleMouseEnter(item.id)}
+                onMouseLeave={handleMouseLeave}
+                onClick={() => handleToggleTap(item.id)}
                 className="inline-flex items-center justify-center gap-2 rounded-3xl text-sm font-medium cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 flip group h-72 w-full whitespace-normal p-0 text-left hover:bg-transparent [perspective:1200px]"
-                aria-pressed={isFlipped}
-                type="button"
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleToggleTap(item.id);
+                  }
+                }}
+                aria-label={`${item.title} - ${item.back}`}
               >
                 <div
                   className={`flip-inner relative h-full w-full transition-transform duration-500 [transform-style:preserve-3d] ${
@@ -53,8 +65,9 @@ export const ReasonsSection: React.FC = () => {
                     <h3 className="break-words font-display text-2xl text-foreground font-semibold">
                       {item.title}
                     </h3>
-                    <span className="text-xs text-muted-foreground/70 font-sans tracking-wide uppercase mt-1 px-3 py-1 rounded-full bg-amber-50/60 border border-gold/20">
-                      Tap to reveal ✦
+                    <span className="text-xs text-muted-foreground/70 font-sans tracking-wide uppercase mt-1 px-3 py-1 rounded-full bg-amber-50/60 border border-gold/20 flex items-center gap-1">
+                      <span>Hover to reveal</span>
+                      <span>✦</span>
                     </span>
                   </div>
 
@@ -66,11 +79,11 @@ export const ReasonsSection: React.FC = () => {
                       “{item.back}”
                     </p>
                     <span className="text-xs text-muted-foreground/70 font-sans uppercase tracking-wider mt-4">
-                      Tap to flip back ↺
+                      Move away to flip back ↺
                     </span>
                   </div>
                 </div>
-              </button>
+              </div>
             );
           })}
         </div>

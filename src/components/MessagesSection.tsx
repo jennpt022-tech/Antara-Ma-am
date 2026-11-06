@@ -4,16 +4,6 @@ import { videoMessages, VideoMessage } from '../data';
 import { MediaModal } from './MediaModal';
 import { triggerConfettiBurst } from '../utils/celebration';
 
-// Beautiful stylized portrait avatars/backgrounds for each team member
-const memberThumbnails = [
-  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=700&q=80', // Ananya
-  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=700&q=80', // Rahul
-  'https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=700&q=80', // Meera
-  'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=700&q=80', // Priya
-  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=700&q=80', // Karan
-  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=700&q=80', // Sneha
-];
-
 export const MessagesSection: React.FC = () => {
   const [selectedMessage, setSelectedMessage] = useState<VideoMessage | null>(null);
 
@@ -30,12 +20,12 @@ export const MessagesSection: React.FC = () => {
             Messages From the Team
           </h2>
           <p className="break-words text-muted-foreground">
-            Six little wishes, one big celebration — with love from all of us.
+            Six heartfelt video wishes, one big celebration — with love from all of us.
           </p>
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {videoMessages.map((msg, index) => (
+          {videoMessages.map((msg) => (
             <div key={msg.id}>
               <button
                 onClick={() => handleMessageClick(msg)}
@@ -44,9 +34,9 @@ export const MessagesSection: React.FC = () => {
               >
                 {/* Poster image background */}
                 <img
-                  src={memberThumbnails[index % memberThumbnails.length]}
+                  src={msg.poster}
                   alt={`${msg.name} - ${msg.role}`}
-                  className="h-full w-full object-cover transition duration-700 group-hover:scale-105 opacity-90"
+                  className="h-full w-full object-cover transition duration-700 group-hover:scale-105 opacity-95"
                 />
 
                 {/* Gradient shade */}

@@ -138,7 +138,8 @@
   transform-style: preserve-3d;
 }
 
-.flip-inner.is-flipped {
+.flip-inner.is-flipped,
+.flip:hover .flip-inner {
   transform: rotateY(180deg);
 }
 

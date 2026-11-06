@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Play, Pause, Sparkles, Heart, MessageSquare } from 'lucide-react';
+import { X, Heart, MessageSquare } from 'lucide-react';
 import { VideoMessage } from '../data';
 import { triggerConfettiBurst } from '../utils/celebration';
 
@@ -9,7 +9,6 @@ interface MediaModalProps {
 }
 
 export const MediaModal: React.FC<MediaModalProps> = ({ message, onClose }) => {
-  const [isPlaying, setIsPlaying] = useState(true);
   const [hasLiked, setHasLiked] = useState(false);
 
   if (!message) return null;
@@ -29,63 +28,47 @@ export const MediaModal: React.FC<MediaModalProps> = ({ message, onClose }) => {
       aria-modal="true"
     >
       <div
-        className="relative w-full max-w-xl rounded-3xl bg-white p-6 sm:p-8 shadow-2xl border border-gold/40 text-left animate-scale-up"
+        className="relative w-full max-w-xl max-h-[92vh] overflow-y-auto rounded-3xl bg-white p-5 sm:p-7 shadow-2xl border border-gold/40 text-left animate-scale-up"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-black/5 transition-colors z-10"
+          className="absolute right-4 top-4 p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-black/5 transition-colors z-20"
           aria-label="Close message view"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Member Header */}
-        <div className="flex items-center gap-4 mb-6">
-          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-gold text-gold-foreground font-display text-2xl font-bold shadow-gold">
-            {message.name[0]}
+        <div className="flex items-center gap-3.5 mb-5 pr-10">
+          <div className="flex h-12 w-12 sm:h-14 sm:w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-gold text-gold-foreground font-display text-xl sm:text-2xl font-bold shadow-gold">
+            {message.avatarText || message.name[0]}
           </div>
-          <div>
-            <h3 className="font-display text-2xl font-bold text-foreground">
+          <div className="min-w-0">
+            <h3 className="font-display text-xl sm:text-2xl font-bold text-foreground truncate">
               {message.name}
             </h3>
-            <span className="inline-block rounded-full bg-gold/30 px-3 py-0.5 text-xs font-semibold text-gold-deep border border-gold/40 mt-0.5">
+            <span className="inline-block rounded-full bg-gold/30 px-3 py-0.5 text-xs font-semibold text-gold-deep border border-gold/40 mt-0.5 truncate max-w-full">
               {message.role}
             </span>
           </div>
         </div>
 
-        {/* Video / Visualizer Preview container */}
-        <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-stone-900 border border-stone-800 shadow-inner flex flex-col justify-between p-4 mb-6">
-          {/* Animated soundwaves */}
-          <div className="flex items-end justify-center gap-1.5 h-24 my-auto">
-            {[40, 75, 50, 90, 60, 100, 45, 80, 65, 95, 30, 85, 55, 70].map((height, i) => (
-              <div
-                key={i}
-                className="w-2 rounded-full bg-gradient-gold transition-all duration-300"
-                style={{
-                  height: isPlaying ? `${height}%` : '20%',
-                  opacity: isPlaying ? 0.9 : 0.4,
-                  animation: isPlaying ? `pulseGlow ${1.2 + (i % 5) * 0.2}s infinite` : 'none',
-                }}
-              />
-            ))}
-          </div>
-
-          <div className="flex items-center justify-between text-white/80 text-xs px-2">
-            <span className="flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5 text-gold" />
-              <span>Voice Wish Recorded with Love</span>
-            </span>
-            <button
-              onClick={() => setIsPlaying(!isPlaying)}
-              className="px-3 py-1 rounded-full bg-white/20 hover:bg-white/30 text-white font-medium flex items-center gap-1.5 transition-colors"
-            >
-              {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
-              <span>{isPlaying ? 'Pause' : 'Play'}</span>
-            </button>
-          </div>
+        {/* Video Player */}
+        <div className="relative mx-auto mb-5 w-full overflow-hidden rounded-2xl bg-black border border-stone-800 shadow-lg">
+          <video
+            key={message.src}
+            src={message.src}
+            poster={message.poster}
+            controls
+            autoPlay
+            playsInline
+            preload="metadata"
+            className="w-full max-h-[50vh] sm:max-h-[55vh] object-contain mx-auto bg-black"
+          >
+            Your browser does not support the video tag.
+          </video>
         </div>
 
         {/* Quote banner */}
