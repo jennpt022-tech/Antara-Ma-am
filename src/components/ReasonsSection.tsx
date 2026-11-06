@@ -65,10 +65,6 @@ export const ReasonsSection: React.FC = () => {
                     <h3 className="break-words font-display text-2xl text-foreground font-semibold">
                       {item.title}
                     </h3>
-                    <span className="text-xs text-muted-foreground/70 font-sans tracking-wide uppercase mt-1 px-3 py-1 rounded-full bg-amber-50/60 border border-gold/20 flex items-center gap-1">
-                      <span>Hover to reveal</span>
-                      <span>✦</span>
-                    </span>
                   </div>
 
                   {/* Card Back */}
@@ -78,9 +74,6 @@ export const ReasonsSection: React.FC = () => {
                     <p className="break-words font-display text-xl italic leading-snug text-foreground">
                       “{item.back}”
                     </p>
-                    <span className="text-xs text-muted-foreground/70 font-sans uppercase tracking-wider mt-4">
-                      Move away to flip back ↺
-                    </span>
                   </div>
                 </div>
               </div>
